@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
+import Menu from './components/Menu/Menu';
 import Welcome from './components/Welcome/Welcome';
-
-// css
-import './App.css';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-      
-        <Welcome />
-      </div>
+      <Router>
+        <div className="App">
+          <Menu />
+          <Welcome />
+          <div className="nav-item" style={{ width: '500px' }}>Hello</div>
+        </div>
+      </Router>
     );
   }
 }
