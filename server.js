@@ -1,17 +1,21 @@
 const express = require('express');
 const bodyParser = require("body-parser");
 const path = require('path');
+const routes = require('./routes');
 
 // express setup
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 // db models
-const db = require('./models');
+const db = require('./db/models');
 
 // body parser configuration
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 app.use(bodyParser.json());
+
+//routes
+app.use(routes);
 
 // serve static assets
 if (process.env.NODE_ENV === "production") {

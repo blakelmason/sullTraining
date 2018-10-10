@@ -29,25 +29,34 @@ class Menu extends Component {
     const titleStyle = {
       pointerEvents: 'none',
       zIndex: '10000',
-      marginTop: '13px'
+      marginTop: '2px'
     }
 
     return (
       <React.Fragment>
         <div className="position-absolute text-center w-100 h2" style={titleStyle}>sullTraining</div>
-        <Navbar dark className="bg-primary" expand="md">
-          <NavbarBrand href="/" >
-            <img src={logo} alt="logo" style={logoStyle} />
-          </NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto mt-2 mt-0-md" navbar>
-              <PageLink to="about" text="About" />
-              <PageLink to="pricing" text="Pricing" />
-              <PageLink to="Login" text="Login" />
-            </Nav>
-          </Collapse>
-        </Navbar>
+        <div className="mb-3 border-bottom">
+          <div className="container">
+            <div className="row">
+              <div className="col">
+                <Navbar light expand="lg" className="p-0">
+                  <NavbarBrand href="/" >
+                    <img src={logo} alt="logo" style={logoStyle} />
+                  </NavbarBrand>
+                  <NavbarToggler onClick={this.toggle} />
+                  <Collapse isOpen={this.state.isOpen} navbar>
+                    <Nav className="ml-auto" navbar>
+                      <PageLink to="/" text="Home" />
+                      <PageLink to="/about" text="About" />
+                      <PageLink to="/pricing" text="Pricing" />
+                      <PageLink to="/login" text="Login" />
+                    </Nav>
+                  </Collapse>
+                </Navbar>
+              </div>
+            </div>
+          </div>
+        </div>
       </React.Fragment>
     )
   }

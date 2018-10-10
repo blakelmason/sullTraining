@@ -10,8 +10,8 @@ const StyledNavItem = styled(NavItem)`
 const PageLink = (props) => {
   return (
     <StyledNavItem>
-      <Link to={props.to}>
-        <button className="btn btn-outline-light my-1 my-0-md">{props.text}</button>
+      <Link className={`nav-link ${window.location.pathname === props.to ? 'active' : null}`} to={props.to}>
+        {props.text}
       </Link>
     </StyledNavItem>
   )
