@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import Menu from './components/Menu/Menu';
-import Welcome from './components/Welcome/Welcome';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import Welcome from './components/Welcome';
+import About from './components/About';
+import Pricing from './components/Pricing';
+import Login from './components/Login/Login';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 class App extends Component {
   render() {
@@ -9,8 +12,10 @@ class App extends Component {
       <Router>
         <div className="App">
           <Menu />
-          <Welcome />
-          <div className="nav-item" style={{ width: '500px' }}>Hello</div>
+          <Route exact path="/" component={Welcome} />
+          <Route exact path="/about" component={About} />
+          <Route exact path="/pricing" component={Pricing} />
+          <Route exact path="/login" component={Login} />
         </div>
       </Router>
     );
