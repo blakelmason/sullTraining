@@ -27,8 +27,13 @@ app.get("*", function (req, res) {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
+//environment
+let force;
+if (process.env.NODE_ENV === 'development') force = true;
+if (process.env.NODE_ENV === 'production') force = false;
+
 // sequelize sync and start server
-db.sequelize.sync({ force: true }).then(function () {
+db.sequelize.sync({ force: false }).then(function () {
   app.listen(PORT, function () {
     console.log(`🌎  ==> Server listening on PORT ${PORT}!`);
   });

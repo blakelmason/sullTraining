@@ -1,27 +1,26 @@
 const express = require('express');
-const auth = require('../controller/auth.ctrl');
+const auth = require('../db/controller/auth.ctrl');
 
 const router = express.Router();
 
+const register = auth.register;
+const login = auth.login;
+
 router.post('/register', (req, res) => {
-  const data = auth.validateRegistration(req.body);
-  const validData = true;
-  const values = Object.values(data);
-  values.forEach(value => {
-    if (value === null) validData = false;
-  })
-  if (validData) {
-    auth.hashPassword(data.password)
-      .then(hash => {
-        data.password = hash;
-        auth.registerUser(data, res);
-      })
-      .catch(err => console.error(err));
+  const data = register.validateRegistration(req.body);
+  if (data.valid) {
+    register.addUserToDb(data, res);
   } else {
     const message = 'Failed validation.';
     console.error(message);
     res.status(500).json({ error: message })
   }
+})
+
+router.get('/login', (req, res) => {
+  const data = req.query;
+
+  res.send('yay');
 })
 
 module.exports = router;

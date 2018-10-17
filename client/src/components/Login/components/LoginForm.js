@@ -28,7 +28,13 @@ class LoginForm extends Component {
   }
 
   registerUser() {
-    axios.post()
+    const loginInfo = {
+      email: this.state.email,
+      password: this.state.password,
+    }
+    axios.get('/auth/login', { params: loginInfo })
+      .then(res => console.log(res))
+      .catch(err => console.error(err));
   }
 
   render() {
