@@ -34,7 +34,10 @@ class LoginForm extends Component {
     }
     axios.get('/auth/login', { params: loginInfo })
       .then(res => console.log(res))
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+        console.log(err.response);
+      });
   }
 
   render() {

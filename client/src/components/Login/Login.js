@@ -7,13 +7,13 @@ const Login = () => {
     <div className="container">
       <div className="row">
         <div className="col-12 col-lg">
-          <div className="border rounded p-3">
+          <div className="border rounded p-3 my-3">
             <h1>Login</h1>
             <LoginForm />
           </div>
         </div>
         <div className="col-12 col-lg">
-          <div className="border rounded p-3 mt-3 mt-lg-0">
+          <div className="border rounded p-3 my-3">
             <h1>Register</h1>
             <RegisterForm />
           </div>
