@@ -17,6 +17,14 @@ class RegisterForm extends Component {
     firstName: '',
     lastName: '',
     password: '',
+    modal: false,
+    registerSuccess: false,
+  }
+
+  toggle() {
+    this.setState({
+      modal: !this.state.modal
+    });
   }
 
   handler(e) {
@@ -36,12 +44,24 @@ class RegisterForm extends Component {
   registerUser() {
     axios.post('/auth/register', this.state)
       .then(res => {
-        console.log(res);
+        this.toggle();
+        if (res.data.created) this.setState({ registerSuccess: true });
+        else this.setState({ registerSuccess: false });
       })
       .catch(err => console.error(err));
   }
 
   render() {
+    const successHeader = <div>Succes!</div>
+    const successMessage = (
+      <div>
+        <div className="mb-2">Account created!</div>
+        <div>Please login.</div>
+      </div>
+    )
+    const duplicateHeader = <div>Oh no. . .</div>
+    const duplicateMessage = <div>A user with this email already exists.</div>
+    this.toggle = this.toggle.bind(this);
     this.handler = this.handler.bind(this);
     return (
       <React.Fragment>
@@ -65,13 +85,14 @@ class RegisterForm extends Component {
           <button onClick={this.validate.bind(this)} className="btn btn-primary mt-3">Register</button>
         </Form>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
-          <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
+          <ModalHeader toggle={this.toggle}>
+            {this.state.registerSuccess ? successHeader : duplicateHeader}
+          </ModalHeader>
           <ModalBody>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            {this.state.registerSuccess ? successMessage : duplicateMessage}
           </ModalBody>
           <ModalFooter>
-            <button color="primary" onClick={this.toggle}>Do Something</button>{' '}
-            <button color="secondary" onClick={this.toggle}>Cancel</button>
+            <button className="btn btn-primary" onClick={this.toggle}>Close</button>
           </ModalFooter>
         </Modal>
       </React.Fragment>
