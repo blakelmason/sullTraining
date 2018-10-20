@@ -24,10 +24,10 @@ class LoginForm extends Component {
     const form = document.getElementById('login-form');
     const validated = form.checkValidity();
     form.classList.add('was-validated');
-    if (validated === true) this.registerUser();
+    if (validated === true) this.loginUser();
   }
 
-  registerUser() {
+  loginUser() {
     const loginInfo = {
       email: this.state.email,
       password: this.state.password,

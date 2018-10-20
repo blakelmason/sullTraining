@@ -45,6 +45,7 @@ class RegisterForm extends Component {
     axios.post('/auth/register', this.state)
       .then(res => {
         this.toggle();
+        console.log(res);
         if (res.data.created) this.setState({ registerSuccess: true });
         else this.setState({ registerSuccess: false });
       })
@@ -63,9 +64,10 @@ class RegisterForm extends Component {
     const duplicateMessage = <div>A user with this email already exists.</div>
     this.toggle = this.toggle.bind(this);
     this.handler = this.handler.bind(this);
+
     return (
       <React.Fragment>
-        <Form className="needs-validation" id="register-form">
+        <Form className="needs-validation" id="register-form" autoComplete="off">
           <FormGroup>
             <Input type="text" placeholder="First Name" name="firstName" onChange={this.handler} required />
             <FormFeedback>Please enter a first name.</FormFeedback>
@@ -84,7 +86,7 @@ class RegisterForm extends Component {
           </FormGroup>
           <button onClick={this.validate.bind(this)} className="btn btn-primary mt-3">Register</button>
         </Form>
-        <Modal isOpen={this.state.modal} toggle={this.toggle}>
+        <Modal isOpen={this.state.modal} toggle={this.toggle} centered>
           <ModalHeader toggle={this.toggle}>
             {this.state.registerSuccess ? successHeader : duplicateHeader}
           </ModalHeader>
