@@ -13,20 +13,12 @@ module.exports = {
       return data;
     },
 
-    getUser(data, res) {
-      db.User.findOne({
-        where: { email: data.email }
+    getUser(data) {
+      return new Promise((resolve, reject) => {
+        db.User.findOne({ where: { email: data.email } })
+          .then(user => resolve(user))
+          .catch(err => reject(err));
       })
-        .then(user => {
-          if (user) {
-            this.checkPassword(data.password, user.dataValues, res);
-          }
-          else res.status(404).json({ error: 'User does not exist.' })
-        })
-        .catch(err => {
-          console.error(err);
-          res.status(500).json({ error: 'Database read.' });
-        })
     },
 
     checkPassword(clientPassword, user, res) {
@@ -39,7 +31,7 @@ module.exports = {
         })
         .catch(err => {
           console.error(err);
-          res.status(500).json({ error: 'Password handling.' })
+          res.status(500).json({ error: 'Password check error.' })
         });
     }
   },
@@ -51,33 +43,36 @@ module.exports = {
       data.firstName = validate.firstName(data.firstName);
       data.lastName = validate.lastName(data.lastName);
       data.valid = validate.checkForNull(data);
-      return data;
+      if (data.valid) return data;
+      else throw error(500, 'Validation error.');
     },
 
-    postUser(data, res) {
-      const saltRounds = 10;
-      bcrypt.hash(data.password, saltRounds)
-        .then(function (hash) {
-          data.password = hash;
-          db.User.findOrCreate({
-            where: {
-              email: data.email
-            },
-            defaults: {
-              firstName: data.firstName,
-              lastName: data.lastName,
-              password: data.password,
-            }
-          })
-            .spread((user, created) => {
-              res.json({ created: created })
-            })
-            .catch(err => {
-              console.error(err);
-              res.status(500);
-            })
-        });
+    hashPassword(password) {
+      return new Promise((resolve, reject) => {
+        const saltRounds = 10;
+        bcrypt.hash(password, saltRounds)
+          .then(hash => resolve(hash))
+          .catch(err => reject(err));
+      })
+    },
+
+    findOrCreateUser(data) {
+      return new Promise((resolve, reject) => {
+        db.User.findOrCreate({
+          where: {
+            email: data.email
+          },
+          defaults: {
+            firstName: data.firstName,
+            lastName: data.lastName,
+            password: data.password,
+          }
+        })
+          .spread((user, created) => resolve(created))
+          .catch(err => reject(err));
+      })
     }
   }
 }
+
 
