@@ -33,7 +33,10 @@ class LoginForm extends Component {
       password: this.state.password,
     }
     axios.get('/auth/login', { params: loginInfo })
-      .then(res => console.log(res))
+      .then(res => {
+        localStorage.setItem("token", res.data.token);
+        window.location.href = window.location.origin;
+      })
       .catch(err => {
         console.error(err);
         console.log(err.response);
