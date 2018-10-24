@@ -1,31 +1,32 @@
 const express = require('express');
-const auth = require('../db/controller/auth.ctrl');
-const helper = require('./helpers/error');
+const helpers = require('../helpers');
+const ctrl = require('../controller').auth;
 
 const router = express.Router();
-const register = auth.register;
-const login = auth.login;
-const validationError = 'Failed validation.';
+const error = helpers.error;
+const register = helpers.register;
+const login = helpers.login;
+const jwt = helpers.jwt;
 
 router.post('/register', (req, res) => {
-  const data = req.body;
-  registerUser(data);
+  registerUser(req.body);
   async function registerUser(data) {
     try {
       data = register.validate(data);
-      if (!data.valid) throw helper.error(500, 'Validation error.');
+      if (!data.valid) throw error(500, 'Registration validation error.');
       data.password = await register.hashPassword(data.password)
         .catch(err => {
           console.error(err);
-          throw helper.error(500, 'Password error.');
+          throw error(500, 'Password hash error.');
         });
-      const created = await register.findOrCreateUser(data)
+      const created = await ctrl.findOrCreateUser(data)
         .catch(err => {
           console.error(err);
-          throw helper.error(500, 'Database error.')
+          throw error(500, 'Database registration finOrCreateUser error.')
         });
       res.json({ created: created });
-    } catch (err) {
+    }
+    catch (err) {
       console.error(err);
       res.status(err.code).json({ error: err.message });
     }
@@ -33,9 +34,33 @@ router.post('/register', (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-  const data = login.validate(req.query);
-  if (data.valid) login.getUser(data, res);
-  else res.status(500).json({ error: validationError });
+  loginUser(req.body);
+  async function loginUser(data) {
+    try {
+      data = login.validate(req.query);
+      if (!data.valid) throw error(500, 'Login validation error.');
+      const dbResponse = await ctrl.findOneUser({ email: data.email })
+        .catch(err => {
+          console.error(err);
+          throw error(500, 'Database login findOne error');
+        })
+      const user = dbResponse.dataValues;
+      if (!user) throw error(500, 'User does not exist');
+      const authenticated = await login.checkPassword(data.password, user.password);
+      if (!authenticated) throw error(401, 'Wrong password.');
+      delete user.password;
+      const token = await jwt.create(user)
+        .catch(err => {
+          console.error(err);
+          throw error(500, 'Token creation error');
+        })
+      res.json({ token: token });
+    }
+    catch (err) {
+      console.error(err);
+      res.status(err.code).json({ error: err.message });
+    }
+  }
 });
 
 module.exports = router;

@@ -6,7 +6,7 @@ import {
   NavbarToggler,
   Nav,
 } from 'reactstrap';
-import logo from '../../assets/images/logo.png';
+import logo from '../../../assets/images/logo.png';
 import PageLink from './components/PageLink';
 
 class Menu extends Component {
@@ -46,10 +46,10 @@ class Menu extends Component {
                   <NavbarToggler onClick={this.toggle} />
                   <Collapse isOpen={this.state.isOpen} navbar>
                     <Nav className="ml-auto" navbar>
-                      <PageLink to="/" text="Home" />
-                      <PageLink to="/about" text="About" />
-                      <PageLink to="/pricing" text="Pricing" />
-                      <PageLink to="/login" text="Login" />
+                      <PageLink to={`${this.props.url}`} text="Welcome" />
+                      <PageLink to={`${this.props.url}/about`} text="About" />
+                      <PageLink to={`${this.props.url}/pricing`} text="Pricing" />
+                      <PageLink to={`${this.props.url}/login`} text="Login" />
                     </Nav>
                   </Collapse>
                 </Navbar>
