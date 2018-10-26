@@ -34,7 +34,7 @@ router.post('/register', (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-  loginUser(req.body);
+  loginUser(req.query);
   async function loginUser(data) {
     try {
       data = login.validate(req.query);
@@ -44,8 +44,8 @@ router.get('/login', (req, res) => {
           console.error(err);
           throw error(500, 'Database login findOne error');
         })
+      if (!dbResponse) throw error(500, 'User does not exist');
       const user = dbResponse.dataValues;
-      if (!user) throw error(500, 'User does not exist');
       const authenticated = await login.checkPassword(data.password, user.password);
       if (!authenticated) throw error(401, 'Wrong password.');
       delete user.password;

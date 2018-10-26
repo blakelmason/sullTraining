@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { login } from '../../../redux/actions/auth.actions';
 import {
   Form,
   FormGroup,
   Input,
   FormFeedback
 } from 'reactstrap';
-import axios from 'axios';
+
 
 class LoginForm extends Component {
   state = {
@@ -28,19 +30,17 @@ class LoginForm extends Component {
   }
 
   loginUser() {
-    const loginInfo = {
+    const user = {
       email: this.state.email,
       password: this.state.password,
     }
-    axios.get('/auth/login', { params: loginInfo })
+    this.props.login(user)
       .then(res => {
-        localStorage.setItem("token", res.data.token);
-        window.location.href = window.location.origin;
+        const token = res.data.token
+        localStorage.setItem('token', token)
+        window.location.href = '/';
       })
-      .catch(err => {
-        console.error(err);
-        console.log(err.response);
-      });
+      .catch(err => console.log(err.response));
   }
 
   render() {
@@ -48,17 +48,33 @@ class LoginForm extends Component {
     return (
       <Form className="needs-validation" id="login-form">
         <FormGroup>
-          <Input type="email" placeholder="Email" name="email" onChange={this.handler} required />
+          <Input
+            type="email"
+            placeholder="Email"
+            name="email"
+            onChange={this.handler}
+            required
+          />
           <FormFeedback>Please enter an email.</FormFeedback>
         </FormGroup>
         <FormGroup>
-          <Input type="password" placeholder="Password" name="password" onChange={this.handler} required />
+          <Input
+            type="password"
+            placeholder="Password"
+            name="password"
+            onChange={this.handler}
+            required
+          />
           <FormFeedback>Please enter a password.</FormFeedback>
         </FormGroup>
-        <button onClick={this.validate.bind(this)} className="btn btn-primary mt-3">Register</button>
+        <button onClick={this.validate.bind(this)} className="btn btn-primary mt-3">Login</button>
       </Form>
     )
   }
 }
 
-export default LoginForm;
+const mapStateToProps = state => ({
+  errors: state.errors,
+})
+
+export default connect(mapStateToProps, { login })(LoginForm);

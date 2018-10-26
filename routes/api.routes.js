@@ -4,7 +4,6 @@ const ctrl = require('../controller');
 
 const router = express.Router();
 const error = helpers.error;
-const api = ctrl.api;
 
 router.get('/user', (req, res) => {
   const data = req.locals;
