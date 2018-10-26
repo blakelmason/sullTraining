@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Menu from './components/Menu/Menu';
-import Welcome from './components/Welcome';
-import About from './components/About';
-import Pricing from './components/Pricing';
-import Login from './components/Login/Login';
+import Menu from './Menu/Menu';
+import Welcome from './Welcome';
+import About from './About';
+import Pricing from './Pricing';
+import Login from './Login/Login';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 class Public extends Component {

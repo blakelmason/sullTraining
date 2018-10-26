@@ -7,7 +7,7 @@ import {
   Nav,
 } from 'reactstrap';
 import logo from '../../../assets/images/logo.png';
-import PageLink from './components/PageLink';
+import PageLink from './PageLink';
 
 class Menu extends Component {
   state = {

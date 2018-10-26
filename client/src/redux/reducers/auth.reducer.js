@@ -8,7 +8,7 @@ const initialState = {
 export default function (state = initialState, action) {
   if (action.type === SET_USER) return {
     ...state,
-    isAuthenticated: action.payload,
+    isAuthenticated: true,
     user: action.payload
   }
   return state;

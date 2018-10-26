@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+
 const validate = require('./validate');
 
 module.exports = {
