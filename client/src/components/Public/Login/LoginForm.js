@@ -13,6 +13,10 @@ class LoginForm extends Component {
   state = {
     email: '',
     password: '',
+    passwordInvalid: null,
+    passwordFeedback: 'Please enter a password.',
+    emailInvalid: null,
+    emailFeedback: 'Please enter an email.',
   }
 
   handler(e) {
@@ -40,7 +44,24 @@ class LoginForm extends Component {
         localStorage.setItem('token', token)
         window.location.href = '/';
       })
-      .catch(err => console.log(err.response));
+      .catch(err => {
+        console.log(err.response);
+        const status = err.response.status;
+        const form = document.getElementById('login-form');
+        form.classList.remove('was-validated');
+        if (status === 401) {
+          this.setState({
+            passwordInvalid: true,
+            passwordFeedback: 'Wrong password.'
+          })
+        }
+        if (status === 500 && err.response.data.error === 'User does not exist') {
+          this.setState({
+            emailInvalid: true,
+            emailFeedback: 'User does not exist. Please register before logging in.'
+          })
+        }
+      });
   }
 
   render() {
@@ -54,8 +75,9 @@ class LoginForm extends Component {
             name="email"
             onChange={this.handler}
             required
+            invalid={this.state.emailInvalid}
           />
-          <FormFeedback>Please enter an email.</FormFeedback>
+          <FormFeedback>{this.state.emailFeedback}</FormFeedback>
         </FormGroup>
         <FormGroup>
           <Input
@@ -64,8 +86,9 @@ class LoginForm extends Component {
             name="password"
             onChange={this.handler}
             required
+            invalid={this.state.passwordInvalid}
           />
-          <FormFeedback>Please enter a password.</FormFeedback>
+          <FormFeedback>{this.state.passwordFeedback}</FormFeedback>
         </FormGroup>
         <button onClick={this.validate.bind(this)} className="btn btn-primary mt-3">Login</button>
       </Form>

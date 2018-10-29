@@ -8,7 +8,10 @@ import {
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import logo from '../../../assets/images/logo.png';
-import { FaUserCircle, FaHome } from 'react-icons/fa';
+import {
+  FaUserCircle,
+  //FaHome
+} from 'react-icons/fa';
 import { logout } from '../../../redux/actions/auth.actions';
 import { connect } from 'react-redux';
 
@@ -43,7 +46,7 @@ class Menu extends Component {
     //   marginTop: '2px'
     // }
 
-    const homeIcon = (<FaHome size="1.7em" className="mx-2" />);
+    //const homeIcon = (<FaHome size="1.7em" className="mx-2" />);
     const userIcon = (<FaUserCircle size="1.7em" className="mx-2" />);
 
     return (
