@@ -6,8 +6,8 @@ import {
   NavbarToggler,
   Nav,
 } from 'reactstrap';
-import logo from '../../../assets/images/logo.png';
-import PageLink from './PageLink';
+import logo from '../../assets/images/logo.png';
+import PageLink from '../common/PageLink';
 
 class Menu extends Component {
   state = {
@@ -38,7 +38,7 @@ class Menu extends Component {
         <div className="mb-3 border-bottom">
           <div className="container">
             <div className="row">
-              <div className="col">
+              <div className="col border-left border-right">
                 <Navbar light expand="lg" className="p-0">
                   <NavbarBrand href="/" >
                     <img src={logo} alt="logo" style={logoStyle} />
