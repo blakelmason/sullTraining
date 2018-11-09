@@ -55,11 +55,18 @@ class LoginForm extends Component {
             passwordFeedback: 'Wrong password.'
           })
         }
-        if (status === 500 && err.response.data.error === 'User does not exist') {
-          this.setState({
-            emailInvalid: true,
-            emailFeedback: 'User does not exist. Please register before logging in.'
-          })
+        if (status === 500) {
+          if (err.response.data.error === 'User does not exist.') {
+            this.setState({
+              emailInvalid: true,
+              emailFeedback: 'User does not exist. Please register before logging in.'
+            })
+          } else if (err.response.data.error === 'Password check error.') {
+            this.setState({
+              passwordInvalid: true,
+              passwordFeedback: 'Wrong password.'
+            })
+          }
         }
       });
   }

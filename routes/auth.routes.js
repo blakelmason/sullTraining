@@ -49,7 +49,7 @@ router.get('/login', (req, res) => {
       const authenticated = await login.checkPassword(data.password, user.password)
         .catch(err => {
           console.error(err);
-          throw error(401, 'Wrong password.')
+          throw error(500, 'Password check error.')
         });
       if (!authenticated) throw error(401, 'Wrong password.');
       delete user.password;
