@@ -77,7 +77,7 @@ class RegisterForm extends Component {
     const p1 = this.state.password1;
     let passwordMessage;
     if (p1.length === 0) passwordMessage = 'Please enter a password.'
-    else passwordMessage = "Password must be at least 8 characters."
+    if (p1.length < 8) passwordMessage = 'Password must be at least 8 characters.'
 
     const p2 = this.state.password2
     let confirmMessage;
@@ -97,6 +97,7 @@ class RegisterForm extends Component {
               placeholder="First Name"
               name="firstName"
               onChange={this.handler}
+              maxLength="128"
               required
             />
             <FormFeedback>
@@ -109,6 +110,7 @@ class RegisterForm extends Component {
               placeholder="Last Name"
               name="lastName"
               onChange={this.handler}
+              maxLength="128"
               required
             />
             <FormFeedback>
@@ -121,6 +123,7 @@ class RegisterForm extends Component {
               placeholder="Email"
               name="email"
               onChange={this.handler}
+              maxLength="128"
               required
             />
             <FormFeedback>
@@ -134,6 +137,7 @@ class RegisterForm extends Component {
               name="password1"
               onChange={this.handler}
               minLength="8"
+              maxLength="128"
               required
             />
             <FormFeedback>
@@ -148,6 +152,7 @@ class RegisterForm extends Component {
               onChange={this.handler}
               pattern={this.state.password1}
               minLength="8"
+              maxLength="128"
               required
             />
             <FormFeedback>
