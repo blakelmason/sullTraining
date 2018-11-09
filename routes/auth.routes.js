@@ -42,17 +42,21 @@ router.get('/login', (req, res) => {
       const dbResponse = await ctrl.findOneUser({ email: data.email })
         .catch(err => {
           console.error(err);
-          throw error(500, 'Database login findOne error');
+          throw error(500, 'Database login findOne error.');
         })
-      if (!dbResponse) throw error(500, 'User does not exist');
+      if (!dbResponse) throw error(500, 'User does not exist.');
       const user = dbResponse.dataValues;
-      const authenticated = await login.checkPassword(data.password, user.password);
+      const authenticated = await login.checkPassword(data.password, user.password)
+        .catch(err => {
+          console.error(err);
+          throw error(401, 'Wrong password.')
+        });
       if (!authenticated) throw error(401, 'Wrong password.');
       delete user.password;
       const token = await jwt.create(user)
         .catch(err => {
           console.error(err);
-          throw error(500, 'Token creation error');
+          throw error(500, 'Token creation error.');
         })
       res.json({ token: token });
     }
