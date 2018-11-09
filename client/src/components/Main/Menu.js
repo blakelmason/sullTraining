@@ -23,8 +23,6 @@ class Menu extends Component {
     });
   }
 
-  home() { window.location.href = '/'; }
-
   logout() {
     console.log('hello');
     this.props.logout();
@@ -57,7 +55,7 @@ class Menu extends Component {
                   <NavbarToggler onClick={this.toggle} />
                   <Collapse isOpen={this.state.isOpen} navbar>
                     <Nav className="ml-auto" navbar>
-                      <PageLink to="/" text="Home" onClick={this.home.bind(this)} />
+                      <PageLink to="/" text="Home" />
                       <PageLink to="/account" text="Account" />
                       <PageLink to="" text="Logout" onClick={this.logout.bind(this)} />
                     </Nav>
