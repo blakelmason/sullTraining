@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Menu from './Menu';
-import Home from './Home';
+import Home from './Home/Home';
+import Account from './Account/Account'
 
 class Main extends Component {
   render() {
@@ -10,7 +11,10 @@ class Main extends Component {
       <Router>
         <div>
           <Menu />
-          <Route exact path={`${this.props.match.url}`} component={Home} />
+          <Switch>
+            <Route path="/account" component={Account} />
+            <Route path="/" component={Home} />
+          </Switch>
         </div>
       </Router>
     );

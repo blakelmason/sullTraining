@@ -22,10 +22,6 @@ class Menu extends Component {
 
   render() {
     this.toggle = this.toggle.bind(this);
-    const logoStyle = {
-      height: '35px',
-      width: '35px'
-    }
     const titleStyle = {
       pointerEvents: 'none',
       zIndex: '1049',
@@ -41,7 +37,7 @@ class Menu extends Component {
               <div className="col border-left border-right">
                 <Navbar light expand="lg" className="p-0">
                   <NavbarBrand href="/" >
-                    <img src={logo} alt="logo" style={logoStyle} />
+                    <img src={logo} alt="logo" className="logo" />
                   </NavbarBrand>
                   <NavbarToggler onClick={this.toggle} />
                   <Collapse isOpen={this.state.isOpen} navbar>
