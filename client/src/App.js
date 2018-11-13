@@ -48,8 +48,8 @@ class App extends Component {
               <Loading />
               :
               <Switch>
-                <PrivateRoute exact path="/" component={Main} />
                 <PublicRoute path="/public" component={Public} />
+                <PrivateRoute path="/" component={Main} />
                 <Route component={NoMatch} />
               </Switch>
           }

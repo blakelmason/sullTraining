@@ -7,8 +7,6 @@ import {
   Nav,
 } from 'reactstrap';
 import logo from '../../assets/images/logo.png';
-import { logout } from '../../redux/actions/auth.actions';
-import { connect } from 'react-redux';
 
 import PageLink from '../common/PageLink';
 
@@ -23,18 +21,8 @@ class Menu extends Component {
     });
   }
 
-  logout() {
-    console.log('hello');
-    this.props.logout();
-    window.location.href = '/';
-  }
-
   render() {
     this.toggle = this.toggle.bind(this);
-    const logoStyle = {
-      height: '35px',
-      width: '35px'
-    }
     const titleStyle = {
       pointerEvents: 'none',
       zIndex: '1049',
@@ -50,14 +38,13 @@ class Menu extends Component {
               <div className="col border-left border-right">
                 <Navbar light expand="lg" className="p-0">
                   <NavbarBrand href="/" >
-                    <img src={logo} alt="logo" style={logoStyle} />
+                    <img src={logo} alt="logo" className="logo" />
                   </NavbarBrand>
                   <NavbarToggler onClick={this.toggle} />
                   <Collapse isOpen={this.state.isOpen} navbar>
                     <Nav className="ml-auto" navbar>
                       <PageLink to="/" text="Home" />
                       <PageLink to="/account" text="Account" />
-                      <PageLink to="" text="Logout" onClick={this.logout.bind(this)} />
                     </Nav>
                   </Collapse>
                 </Navbar>
@@ -70,9 +57,4 @@ class Menu extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  errors: state.errors,
-  auth: state.auth,
-})
-
-export default connect(mapStateToProps, { logout })(Menu);
+export default Menu;
