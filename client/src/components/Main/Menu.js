@@ -26,7 +26,7 @@ class Menu extends Component {
     const titleStyle = {
       pointerEvents: 'none',
       zIndex: '1049',
-      marginTop: '2px'
+      marginTop: '5px'
     }
 
     return (
